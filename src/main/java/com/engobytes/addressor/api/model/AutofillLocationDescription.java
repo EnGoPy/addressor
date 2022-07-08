@@ -1,5 +1,6 @@
 package com.engobytes.addressor.api.model;
 
+import com.engobytes.addressor.service.model.MatchPair;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
