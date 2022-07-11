@@ -11,6 +11,8 @@ import com.engobytes.addressor.service.model.Pair;
 import com.engobytes.addressor.utils.SufixEnum;
 import com.engobytes.addressor.utils.WordParser;
 import com.google.maps.model.LatLng;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
 
 import java.util.ArrayList;
 import java.util.List;
