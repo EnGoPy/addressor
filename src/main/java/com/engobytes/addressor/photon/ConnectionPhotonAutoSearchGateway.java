@@ -4,17 +4,22 @@ import com.engobytes.addressor.configuration.LocationSearchProperty;
 import com.engobytes.addressor.photon.model.PhotonResponse;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
+import org.springframework.stereotype.Component;
 import org.springframework.web.client.RestTemplate;
 
+import javax.validation.constraints.NotNull;
+
+@Component
 public class ConnectionPhotonAutoSearchGateway {
     private static final Logger LOGGER = LoggerFactory.getLogger(ConnectionPhotonAutoSearchGateway.class);
-    private final String baseUrl;
     private final RestTemplate restTemplate;
     private final LocationSearchProperty propertySettings;
 
-    public ConnectionPhotonAutoSearchGateway(String baseUrl, RestTemplate restTemplate, LocationSearchProperty propertySettings) {
-        this.baseUrl = baseUrl;
+    public ConnectionPhotonAutoSearchGateway(
+            @Autowired  RestTemplate restTemplate,
+            @Autowired @NotNull LocationSearchProperty propertySettings) {
         this.restTemplate = restTemplate;
         this.propertySettings = propertySettings;
     }
@@ -23,7 +28,7 @@ public class ConnectionPhotonAutoSearchGateway {
         LOGGER.debug("Use reversed geo-coding with photon");
 
         String searchUrl = String.format("/reverse?lon=%s&lat=%s", lon, lat);
-        String finalUrl = "http://"+baseUrl+searchUrl;
+        String finalUrl = "http://"+propertySettings.getSearchPhotonUrl()+searchUrl;
         return getAutoSearchResponse(finalUrl);
     }
 
@@ -38,7 +43,7 @@ public class ConnectionPhotonAutoSearchGateway {
                     .append("%bbox=")
                     .append(propertySettings.getBoundaryForPhotonUrl());
         }
-        String finalUrl = "http://"+baseUrl + url;
+        String finalUrl = "http://"+propertySettings.getSearchPhotonUrl() + url;
         return getAutoSearchResponse(finalUrl);
     }
 
