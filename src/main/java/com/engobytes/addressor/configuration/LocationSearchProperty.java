@@ -12,12 +12,16 @@ import java.util.List;
 @Getter
 public class LocationSearchProperty {
 
+    @Value("${photon.url}")
     private String searchPhotonUrl;
 
-    private Boolean filterResultsWithAllowedTags;
-
+    @Value("#{new Boolean('${map.location.reverseGeocode.filtering.enable:true}')}")
     private Boolean reverseGeocodingFiltering;
 
+    @Value("#{new Boolean('${map.location.autosearch.filtering.enable:true}')}")
+    private Boolean filterAutosearchWithAllowedTags;
+
+    @Value("${map.location.autosearch.filtering.limit:8}")
     private int autoSearchResultLimit;
 
     @Value("#{'${map.location.autosearch.filtering.countries}'.split(',\\s*')}")
@@ -26,7 +30,7 @@ public class LocationSearchProperty {
     @Value("#{'${map.location.autosearch.filtering.cities}'.split(',\\s*')}")
     private List<String> includeCities = new ArrayList<>();
 
-    @Value("${map.location.autosearch.search.W_boundary}")
+    @Value("#{new Boolean('${map.location.autosearch.search.useBoundary:false}')}")
     private Boolean useBoundaryBox;
 
     @Value("${map.location.autosearch.search.W_boundary}")

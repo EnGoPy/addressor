@@ -1,0 +1,24 @@
+server:
+  port: 2320
+
+photon:
+  url: "http://localhost:2223"
+
+map:
+  location:
+    autosearch:
+      filtering:
+        enable: true
+        countries: PL
+        cities:
+        limit: 8
+      search:
+        useBoundary: false
+        W_boundary: 180
+        S_boundary: 90
+        E_boundary: 180
+        N_boundary: 90
+    reverseGeocode:
+      filtering:
+        enable: true
+

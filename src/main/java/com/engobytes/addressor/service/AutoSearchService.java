@@ -7,5 +7,7 @@ import java.util.List;
 
 @Service
 public interface AutoSearchService {
-    List<AutoFillSuggestion> getSuggestionsByNamePart(String namePart);
+
+    List<AutoFillSuggestion> getPropositionsByNamePart(String namePart);
+
 }

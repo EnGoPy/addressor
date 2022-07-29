@@ -4,7 +4,6 @@ import com.engobytes.addressor.api.model.AutoFillResponse;
 import com.engobytes.addressor.api.model.AutofillLocationDescription;
 import com.engobytes.addressor.configuration.LocationSearchProperty;
 import com.engobytes.addressor.exception.AddressNotFoundException;
-import com.engobytes.addressor.photon.AutoSearchService;
 import com.engobytes.addressor.service.model.AutoFillSuggestion;
 import com.engobytes.addressor.service.model.GeoPoint;
 import com.engobytes.addressor.utils.WordParser;

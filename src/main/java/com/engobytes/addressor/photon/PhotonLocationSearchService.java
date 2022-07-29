@@ -5,11 +5,13 @@ import com.engobytes.addressor.photon.model.PhotonResponse;
 import com.engobytes.addressor.service.AutoSearchService;
 import com.engobytes.addressor.service.model.AutoFillSuggestion;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
 
 import java.util.ArrayList;
 import java.util.List;
 
+@Service
 public class PhotonLocationSearchService implements AutoSearchService {
 
     @Autowired
@@ -18,7 +20,7 @@ public class PhotonLocationSearchService implements AutoSearchService {
     RestTemplate restTemplate;
 
     @Override
-    public List<AutoFillSuggestion> getSuggestionsByNamePart(String location) {
+    public List<AutoFillSuggestion> getPropositionsByNamePart(String location) {
         ConnectionPhotonAutoSearchGateway photonConnection  =
                 new ConnectionPhotonAutoSearchGateway(locationSearchProperty.getSearchPhotonUrl(), restTemplate, locationSearchProperty);
         PhotonResponse photonAutosearchResponse = photonConnection.getPropositionsByName(location);

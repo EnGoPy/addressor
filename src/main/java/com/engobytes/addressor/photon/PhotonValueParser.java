@@ -11,8 +11,6 @@ import com.engobytes.addressor.service.model.Pair;
 import com.engobytes.addressor.utils.SufixEnum;
 import com.engobytes.addressor.utils.WordParser;
 import com.google.maps.model.LatLng;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Component;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -52,7 +50,7 @@ public class PhotonValueParser {
                     .stream()
                     .filter(location -> properties.getAllowedCountryCodes().contains(location.getProperties().getCountrycode()))
                     .filter(location -> {
-                        if (properties.getFilterResultsWithAllowedTags()) {
+                        if (properties.getFilterAutosearchWithAllowedTags()) {
                             String key = location.getProperties().getOsm_key();
                             String value = location.getProperties().getOsm_value();
 
