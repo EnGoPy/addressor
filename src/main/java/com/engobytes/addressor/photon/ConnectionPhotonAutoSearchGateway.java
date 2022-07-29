@@ -27,15 +27,21 @@ public class ConnectionPhotonAutoSearchGateway {
     public PhotonResponse getLocationByGeoCoords(double lat, double lon){
         LOGGER.debug("Use reversed geo-coding with photon");
 
-        String searchUrl = String.format("/reverse?lon=%s&lat=%s", lon, lat);
-        String finalUrl = "http://"+propertySettings.getSearchPhotonUrl()+searchUrl;
-        return getAutoSearchResponse(finalUrl);
+        String url = "http://" + propertySettings.getSearchPhotonUrl() +
+                "/reverse?lon=" +
+                lon +
+                "&lat=" +
+                lat;
+
+        return getAutoSearchResponse(url);
     }
 
     public PhotonResponse getPropositionsByName(String location) {
         LOGGER.debug("Use autosearch with photon");
         StringBuilder url = new StringBuilder(
-                String.format("/api/?q=%s&lang=en&limit=%s",
+                String.format("http://"
+                                +propertySettings.getSearchPhotonUrl()
+                                +"/api/?q=%s&lang=en&limit=%s",
                         location, propertySettings.getAutoSearchResultLimit()));
 
         if(propertySettings.getUseBoundaryBox()){
@@ -43,8 +49,7 @@ public class ConnectionPhotonAutoSearchGateway {
                     .append("%bbox=")
                     .append(propertySettings.getBoundaryForPhotonUrl());
         }
-        String finalUrl = "http://"+propertySettings.getSearchPhotonUrl() + url;
-        return getAutoSearchResponse(finalUrl);
+        return getAutoSearchResponse(url.toString());
     }
 
 
