@@ -21,7 +21,7 @@ public class PhotonValueParser {
 
     public static GeoPoint parseReverseGeoCodeResponse(LatLng coordinates, PhotonResponse autoSearchResponse,
                                                        LocationSearchProperty properties) {
-        GeoPoint foundPropositions = new GeoPoint(coordinates.lng, coordinates.lat);
+        GeoPoint foundProposition = new GeoPoint(coordinates.lng, coordinates.lat, "");
         if (!autoSearchResponse.getFeatures().isEmpty()) {
             Optional<String> description = autoSearchResponse.getFeatures()
                     .stream()
@@ -37,9 +37,9 @@ public class PhotonValueParser {
                     })
                     .map(PhotonValueParser::parseReversedGeocodingDescription)
                     .findFirst();
-            foundPropositions.setDescription(description.orElse(""));
+            foundProposition.setDescription(description.orElse(""));
         }
-        return foundPropositions;
+        return foundProposition;
     }
 
     public static List<AutoFillSuggestion> parseAutoSearchResponse(PhotonResponse autoSearchResponse,
@@ -54,7 +54,8 @@ public class PhotonValueParser {
                             String key = location.getProperties().getOsm_key();
                             String value = location.getProperties().getOsm_value();
 
-                            boolean allowedCity = properties.getIncludeCities().contains(location.getProperties().getCity());
+                            boolean allowedCity =
+                                    properties.getIncludeCities().isEmpty() || properties.getIncludeCities().contains(location.getProperties().getCity());
                             boolean allowedTagPair = PhotonAutoSearchParserConstants.ALLOWED_TAG_PAIRS.contains(Pair.of(key, value));
 
                             return allowedCity && allowedTagPair;

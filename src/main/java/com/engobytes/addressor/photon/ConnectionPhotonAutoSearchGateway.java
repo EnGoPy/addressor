@@ -27,7 +27,7 @@ public class ConnectionPhotonAutoSearchGateway {
     public PhotonResponse getLocationByGeoCoords(double lat, double lon){
         LOGGER.debug("Use reversed geo-coding with photon");
 
-        String url = "http://" + propertySettings.getSearchPhotonUrl() +
+        String url = propertySettings.getSearchPhotonUrl() +
                 "/reverse?lon=" +
                 lon +
                 "&lat=" +

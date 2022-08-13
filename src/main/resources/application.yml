@@ -1,8 +1,8 @@
 server:
-  port: 2320
+  port: 2300
 
 photon:
-  url: "http://localhost:2223"
+  url: "http://localhost:2322"
 
 map:
   location:
@@ -22,3 +22,8 @@ map:
       filtering:
         enable: true
 
+management:
+  endpoints:
+    web:
+      exposure:
+        include: info

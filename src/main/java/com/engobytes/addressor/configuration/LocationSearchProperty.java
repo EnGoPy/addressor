@@ -3,14 +3,22 @@ package com.engobytes.addressor.configuration;
 import lombok.AccessLevel;
 import lombok.Getter;
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.stereotype.Service;
+import org.springframework.boot.actuate.endpoint.annotation.ReadOperation;
+import org.springframework.boot.actuate.endpoint.web.WebEndpointResponse;
+import org.springframework.boot.actuate.endpoint.web.annotation.EndpointWebExtension;
+import org.springframework.boot.actuate.info.InfoEndpoint;
+import org.springframework.stereotype.Component;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
-@Service
+@Component
+@EndpointWebExtension(endpoint = InfoEndpoint.class)
 @Getter
 public class LocationSearchProperty {
+
 
     @Value("${photon.url}")
     private String searchPhotonUrl;
@@ -67,5 +75,26 @@ public class LocationSearchProperty {
             boundaryBox.add(northSearchBoundary);
         }
         return boundaryBox;
+    }
+
+    @ReadOperation
+    public WebEndpointResponse<Map> info() {
+        Map<String, Object> info = new HashMap<>();
+        info.put("searchPhotonUrl", getSearchPhotonUrl());
+        info.put("reverseGeocodingFiltering", getReverseGeocodingFiltering());
+        info.put("filterAutosearchWithAllowedTags", getFilterAutosearchWithAllowedTags());
+        info.put("autoSearchResultLimit", getAutoSearchResultLimit());
+        info.put("allowedCountryCodes", getAllowedCountryCodes());
+        info.put("includeCities", getIncludeCities());
+        info.put("useBoundaryBox", getUseBoundaryBox());
+        info.put("westernSearchBoundary", getWesternSearchBoundary());
+        info.put("southSearchBoundary", getSouthSearchBoundary());
+        info.put("easternSearchBoundary", getEasternSearchBoundary());
+        info.put("northSearchBoundary", getNorthSearchBoundary());
+        info.put("boundaryBox", getBoundaryBox());
+        Map<String, Object> wrapper = new HashMap<>();
+        wrapper.put("appProperties", info);
+
+        return new WebEndpointResponse<>(wrapper);
     }
 }
