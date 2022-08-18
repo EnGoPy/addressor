@@ -1,10 +1,12 @@
 package com.engobytes.addressor.photon.constants;
 
 import com.engobytes.addressor.service.model.Pair;
+import org.springframework.stereotype.Component;
 
 import java.util.Arrays;
 import java.util.HashSet;
 
+@Component
 public class PhotonAutoSearchParserConstants {
 
     public static HashSet<Pair<String, String>> ALLOWED_TAG_PAIRS = new HashSet<>();

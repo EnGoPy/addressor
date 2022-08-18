@@ -99,7 +99,12 @@ public class ConnectionPhotonAutoSearchGateway {
 
     private boolean successHandShakeWithPhotonInternal(){
         String u = propertySettings.getSearchPhotonUrl().concat("/api?q");
-        ResponseEntity<String> response = restTemplate.getForEntity(u, String.class);
-        return HttpStatus.valueOf(response.getStatusCodeValue()).is2xxSuccessful();
+        ResponseEntity<String> response;
+                try{
+                    response = restTemplate.getForEntity(u, String.class);
+                    return HttpStatus.valueOf(response.getStatusCodeValue()).is2xxSuccessful();
+                }catch (Exception e){
+                    return false;
+                }
     }
 }

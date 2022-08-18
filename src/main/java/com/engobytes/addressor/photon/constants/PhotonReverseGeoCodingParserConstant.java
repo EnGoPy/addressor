@@ -7,6 +7,7 @@ import javax.annotation.PostConstruct;
 import java.util.Arrays;
 import java.util.HashSet;
 
+@Component
 public class PhotonReverseGeoCodingParserConstant extends PhotonAutoSearchParserConstants{
 
     private static final HashSet<String> ADDITIONAL_AMENITY_VALUES = new HashSet<>(Arrays.asList( "bench", "bicycle_parking", "charging_station", "parking", "police", "vending_machine", "veterinary"));
