@@ -11,6 +11,7 @@ import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 import java.util.TreeMap;
 import java.util.stream.Collectors;
 
@@ -27,7 +28,7 @@ public class AllowedTagPairsInfoEndpoint {
         return allowedTags;
     }
 
-    private TreeMap<String,List<String>> groupElementsByKey(HashSet<Pair<String, String>> pairHashSet){
+    private TreeMap<String,List<String>> groupElementsByKey(Set<Pair<String, String>> pairHashSet){
         Map<String, List<String>> setOfLists = pairHashSet
                 .stream()
                 .collect(Collectors
