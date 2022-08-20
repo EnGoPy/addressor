@@ -26,4 +26,4 @@ management:
   endpoints:
     web:
       exposure:
-        include: info, allowedTags
+        include: info

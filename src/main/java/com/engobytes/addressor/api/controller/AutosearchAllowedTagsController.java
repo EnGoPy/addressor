@@ -8,31 +8,33 @@ import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.util.List;
 import java.util.Map;
 import java.util.TreeMap;
 
-@RestController(value = "/autosearch/tags")
+@RestController
+@RequestMapping("/autosearch/tags")
 public class AutosearchAllowedTagsController {
 
     @Autowired
     private PhotonAutoSearchParserConstants photonAutoSearchParserConstants;
 
     @PostMapping
-    public HttpStatus addTag(@RequestBody Map<String, String> tag) {
+    public HttpStatus addAutoSearchTag(@RequestBody Map<String, String> tag) {
         photonAutoSearchParserConstants.addAdditionalTag(tag);
         return HttpStatus.CREATED;
     }
 
     @GetMapping
-    public TreeMap<String, List<String>> allowedTags() {
+    public TreeMap<String, List<String>> allowedAutoSearchTags() {
         return FilterTagUtils.groupElementsByKey(PhotonAutoSearchParserConstants.ALLOWED_TAG_PAIRS);
     }
 
     @DeleteMapping
-    public HttpStatus removeTag(@RequestBody Map<String, String> tag) {
+    public HttpStatus removeAutoSearchTag(@RequestBody Map<String, String> tag) {
         photonAutoSearchParserConstants.removeTag(tag);
         return HttpStatus.ACCEPTED;
     }
