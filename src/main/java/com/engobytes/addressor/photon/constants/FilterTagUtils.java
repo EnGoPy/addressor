@@ -1,6 +1,8 @@
 package com.engobytes.addressor.photon.constants;
 
 import com.engobytes.addressor.service.model.Pair;
+import lombok.extern.slf4j.Slf4j;
+import org.springframework.lang.Nullable;
 
 import java.util.HashSet;
 import java.util.List;
@@ -9,9 +11,13 @@ import java.util.Set;
 import java.util.TreeMap;
 import java.util.stream.Collectors;
 
+@Slf4j
 public class FilterTagUtils {
 
-    public static TreeMap<String, List<String>> groupElementsByKey(Set<Pair<String, String>> pairHashSet) {
+    public static TreeMap<String, List<String>> groupElementsByKey(@Nullable Set<Pair<String, String>> pairHashSet) {
+        if(pairHashSet == null){
+            return new TreeMap<>();
+        }
         Map<String, List<String>> setOfLists = pairHashSet
                 .stream()
                 .collect(Collectors
@@ -22,7 +28,12 @@ public class FilterTagUtils {
         return sorted;
     }
 
-    public static void addKeyValues(Set<Pair<String, String>> tagPairs, String key, HashSet<String> values) {
+    public static void addKeyValues(@Nullable Set<Pair<String, String>> tagPairs,@Nullable String key, Set<String> values) {
+        if(tagPairs == null || key == null){
+            log.warn("Null parameter passed to method. Breaking execution. tagPairs: {} , key: {} ",
+                    tagPairs==null, key==null);
+            return;
+        }
         for (String value : values) {
             tagPairs.add(Pair.of(key, value));
         }
