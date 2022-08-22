@@ -11,12 +11,11 @@ import com.google.maps.model.LatLng;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
 import java.util.List;
-import java.util.concurrent.atomic.AtomicReference;
+import java.util.stream.Collectors;
 
 @Service
-public class LocationAddressServiceImpl implements LocationAddressService{
+public class LocationAddressServiceImpl implements LocationAddressService {
 
     @Autowired
     private AutoSearchService autoSearchService;
@@ -26,38 +25,33 @@ public class LocationAddressServiceImpl implements LocationAddressService{
     private LocationSearchProperty locationSearchProperty;
 
     @Override
-    public GeoPoint getAddressFromGeoCords(GeoPoint geoPoint) {
-            LatLng coordinates = new LatLng(geoPoint.getLatitude(), geoPoint.getLongitude());
+    public GeoPoint getAddressFromGeoCords(double lng, double lat) {
+        LatLng coordinates = new LatLng(lat, lng);
 
-            GeoPoint foundLocationByCoords = reverseGeocodeService.getAddressFromGeoCoords(coordinates);
-            String searchAddressDescription = foundLocationByCoords.getDescription();
+        GeoPoint foundLocationByCoords = reverseGeocodeService.getAddressFromGeoCoords(coordinates);
+        String searchAddressDescription = foundLocationByCoords.getDescription();
 
-            if (searchAddressDescription.isEmpty()){
-                throw new AddressNotFoundException("Address not found.");
-            }
+        if (searchAddressDescription.isEmpty()) {
+            throw new AddressNotFoundException("Address not found.");
+        }
 
-            geoPoint.setDescription(searchAddressDescription);
-
-            return geoPoint;
+        return new GeoPoint(lng, lat, searchAddressDescription);
     }
 
     @Override
     public List<AutoFillResponse> getLocationsSuggestionsByNamePart(String searchPhrase) {
-        AtomicReference<String> filteredPhrase = new AtomicReference(WordParser.eraseFinishingStrings(searchPhrase, "Gliwice"));
         List<AutoFillSuggestion> osmSuggestions = autoSearchService.getPropositionsByNamePart(searchPhrase);
-        AtomicReference<List<AutoFillResponse>> mat = new AtomicReference<>(new ArrayList<>());
-        osmSuggestions.stream()
+        return osmSuggestions.stream()
                 .limit(locationSearchProperty.getAutoSearchResultLimit())
-                .forEach(suggestion -> {
+                .map(suggestion -> {
                     AutofillLocationDescription autofillLocationDescription =
-                            new AutofillLocationDescription(suggestion.getTitle(), suggestion.getAddress(), WordParser.findMatchingPairsInString(suggestion.getTitle(), filteredPhrase.get()));
-                    mat.get().add(AutoFillResponse.builder()
+                            new AutofillLocationDescription(suggestion.getTitle(), suggestion.getAddress(), WordParser.findMatchingPairsInString(suggestion.getTitle(), searchPhrase));
+                    return (AutoFillResponse.builder()
                             .description(autofillLocationDescription)
                             .latitude(suggestion.getLatitude())
                             .longitude(suggestion.getLongitude())
                             .build());
-                });
-
-        return mat.get();
+                })
+                .collect(Collectors.toList());
     }
 }

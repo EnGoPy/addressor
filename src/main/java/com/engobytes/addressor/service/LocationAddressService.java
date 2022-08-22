@@ -9,7 +9,7 @@ import java.util.List;
 @Service
 public interface LocationAddressService {
 
-    GeoPoint getAddressFromGeoCords(GeoPoint geoPoint);
+    GeoPoint getAddressFromGeoCords(double lng, double lat);
 
     List<AutoFillResponse> getLocationsSuggestionsByNamePart(String searchPhrase);
 }
