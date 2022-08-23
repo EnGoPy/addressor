@@ -2,7 +2,7 @@ server:
   port: 2300
 
 photon:
-  url: "http://localhost:2322"
+  url: "localhost:2322"
 
 map:
   location:
@@ -11,7 +11,10 @@ map:
         enable: true
         countries: PL
         cities:
-        limit: 8
+        photon:
+          limit: 0
+        api:
+          limit: 8
       search:
         useBoundary: false
         W_boundary: 180

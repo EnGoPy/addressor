@@ -29,13 +29,16 @@ public class LocationSearchProperty {
     @Value("#{new Boolean('${map.location.autosearch.filtering.enable:true}')}")
     private Boolean filterAutosearchWithAllowedTags;
 
-    @Value("${map.location.autosearch.filtering.limit:8}")
+    @Value("${map.location.autosearch.filtering.photon.limit:0}") //0 value means we don't limit photon at all
+    private int autoSearchPhotonRequestLimit;
+
+    @Value("${map.location.autosearch.filtering.api.limit:8}")
     private int autoSearchResultLimit;
 
-    @Value("#{'${map.location.autosearch.filtering.countries}'.split(',\\s*')}")
+    @Value("#{'${map.location.autosearch.filtering.countries}'.empty?(new java.util.ArrayList()):'${map.location.autosearch.filtering.countries}'.split(',')}")
     private List<String> allowedCountryCodes;
 
-    @Value("#{'${map.location.autosearch.filtering.cities}'.split(',\\s*')}")
+    @Value("#{'${map.location.autosearch.filtering.cities}'.empty?(new java.util.ArrayList()):'${map.location.autosearch.filtering.cities}'.split(',')}")
     private List<String> includeCities = new ArrayList<>();
 
     @Value("#{new Boolean('${map.location.autosearch.search.useBoundary:false}')}")

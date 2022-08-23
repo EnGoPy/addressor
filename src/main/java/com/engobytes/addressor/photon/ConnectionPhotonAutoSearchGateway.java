@@ -61,7 +61,8 @@ public class ConnectionPhotonAutoSearchGateway {
     public PhotonResponse getLocationByGeoCoords(double lat, double lon){
         LOGGER.debug("Use reversed geo-coding with photon");
 
-        String url = propertySettings.getSearchPhotonUrl() +
+        String url = "http://" +
+                propertySettings.getSearchPhotonUrl() +
                 "/reverse?lon=" +
                 lon +
                 "&lat=" +
@@ -75,8 +76,13 @@ public class ConnectionPhotonAutoSearchGateway {
         StringBuilder url = new StringBuilder(
                 String.format("http://"
                                 +propertySettings.getSearchPhotonUrl()
-                                +"/api/?q=%s&lang=en&limit=%s",
-                        location, propertySettings.getAutoSearchResultLimit()));
+                                +"/api/?q=%s&lang=en",
+                        location));
+        if(propertySettings.getAutoSearchPhotonRequestLimit() != 0){
+            url
+                    .append("&limit=")
+                    .append(propertySettings.getAutoSearchPhotonRequestLimit());
+        }
 
         if(propertySettings.getUseBoundaryBox()){
             url
