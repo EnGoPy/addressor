@@ -19,4 +19,8 @@ public class AutoFillSuggestion {
     private double longitude;
     private String title;
     private String address;
+
+    public String getReversedDescription(){
+        return this.title + ", " + this.address;
+    }
 }

@@ -71,7 +71,7 @@ public class PhotonValueParser {
 
     public static String parseReversedGeocodingDescription(PhotonLocation location) {
         AutoFillSuggestion parsedLocation = parseAutoSearchDescription(location);
-        return parsedLocation.getTitle() + " " + parsedLocation.getAddress();
+        return WordParser.eraseFinishingStrings(parsedLocation.getReversedDescription(), ",");
     }
 
     public static AutoFillSuggestion parseAutoSearchDescription(PhotonLocation location) {
@@ -79,6 +79,7 @@ public class PhotonValueParser {
         String address = "";
         switch (location.getProperties().getOsm_key()) {
             case "building":
+            case "place":
                 title = parseBuildingTitle(location);
                 address = parseBuildingAddress(location);
                 break;
