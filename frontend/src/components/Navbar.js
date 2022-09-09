@@ -12,9 +12,7 @@ const Navbar = () => {
                         <NavLink className="nav-item nav-link text-white" to={"/autosearch"}>AutoSearch</NavLink>
                         <NavLink className="nav-item nav-link text-white" to={"/about"}>About</NavLink>
                     </div>
-
                 </span>
-
             </nav>
         </React.Fragment>
     );
