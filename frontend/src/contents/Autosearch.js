@@ -1,31 +1,40 @@
 import React, {useEffect, useState} from "react";
-import AutoSearchListItem from "../components/AutoSearchListItem";
-import {Button, Table} from "reactstrap";
+import TagListItem from "./TagListItem";
+import CreateTagForm from "./CreateTagForm";
+import config from "../config.json";
+
 
 const Autosearch = () => {
 
     const [autoSearchTags, setAutoSearchTags] = useState();
     const [fetchedData, setFetchedData] = useState(false);
+    const [validTags, setValidTags] = useState();
 
     useEffect(() => {
         fetch("http://localhost:2300/autosearch/tags")
-            .then(res =>  res.json()
+            .then(res => res.json()
             )
             .then(json => {
-                setAutoSearchTags(json)
-                setFetchedData(true)
+                    setAutoSearchTags(json)
+                    setFetchedData(true)
+                    setValidTags(true)
                 }
             )
             .catch(() => {
                 setFetchedData(false);
                 console.log("Unable to fetch data from API")
             })
-    }, []);
+    }, [validTags]);
+
+    const refreshTagList = () => {
+        setValidTags(false);
+    }
 
     return (
         <>
+            <CreateTagForm callback={() => refreshTagList()} urlSufix={config.autoSearchTagUrl}/>
             <h2>Allowed tag pairs for autosearch</h2>
-            {fetchedData ? <AutoSearchListItem tags={autoSearchTags}/> : `Waiting for initialisation`}
+            {validTags ? <TagListItem tags={autoSearchTags}/> : `Waiting for initialisation`}
         </>
     )
 }

@@ -11,11 +11,11 @@ const ContentDisplay = () => {
     return (
         <>
             <Routes>
-                <Route path="/" exact element={<Home/>} />
-                <Route path="/reversed" exact element={<Reversed />} />
-                <Route path="/autosearch" exact element={<Autosearch />} />
-                <Route path="/about" exact element={<About />} />
-                <Route path="*" element={<ErrorPage />} />
+                <Route path="/" exact element={<Home/>}/>
+                <Route path="/reversed" exact element={<Reversed/>}/>
+                <Route path="/autosearch" exact element={<Autosearch/>}/>
+                <Route path="/about" exact element={<About/>}/>
+                <Route path="*" element={<ErrorPage/>}/>
             </Routes>
         </>
     )

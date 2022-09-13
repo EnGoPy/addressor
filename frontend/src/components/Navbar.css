@@ -1,7 +1,8 @@
 .nav-custom {
- background-color: #004bb6;
+    background-color: #004bb6;
     color: white;
 }
+
 NavLink.active {
     color: black;
     background-color: #0265f1;

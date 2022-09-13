@@ -1,7 +1,7 @@
 import React from "react";
 
 const About = () => {
-    return(
+    return (
         <>
             UI main page to make the life with photon easier
         </>
