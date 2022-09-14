@@ -1,5 +1,7 @@
 package com.engobytes.addressor.api.controller;
 
+import com.engobytes.addressor.api.model.TagApi;
+import com.engobytes.addressor.mapper.TagMapper;
 import com.engobytes.addressor.photon.constants.FilterTagUtils;
 import com.engobytes.addressor.photon.constants.PhotonReverseGeoCodingParserConstant;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -12,7 +14,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.util.List;
-import java.util.Map;
 import java.util.TreeMap;
 
 @RestController
@@ -23,8 +24,8 @@ public class ReversedGeocodeAllowedTagsController {
     private PhotonReverseGeoCodingParserConstant photonReverseGeoCodingParserConstant;
 
     @PostMapping
-    public HttpStatus addReverseGeocodeTag(@RequestBody Map<String, String> tag) {
-        photonReverseGeoCodingParserConstant.addAdditionalTag(tag);
+    public HttpStatus addReverseGeocodeTag(@RequestBody TagApi tag) {
+        photonReverseGeoCodingParserConstant.addAdditionalTag(TagMapper.fromApi(tag));
         return HttpStatus.CREATED;
     }
 
@@ -34,8 +35,8 @@ public class ReversedGeocodeAllowedTagsController {
     }
 
     @DeleteMapping
-    public HttpStatus removeReverseGeocodeTag(@RequestBody Map<String, String> tag) {
-        photonReverseGeoCodingParserConstant.removeTag(tag);
+    public HttpStatus removeReverseGeocodeTag(@RequestBody TagApi tag) {
+        photonReverseGeoCodingParserConstant.removeTag(TagMapper.fromApi(tag));
         return HttpStatus.ACCEPTED;
     }
 

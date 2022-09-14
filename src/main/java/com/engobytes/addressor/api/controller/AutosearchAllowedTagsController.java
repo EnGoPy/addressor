@@ -1,5 +1,7 @@
 package com.engobytes.addressor.api.controller;
 
+import com.engobytes.addressor.api.model.TagApi;
+import com.engobytes.addressor.mapper.TagMapper;
 import com.engobytes.addressor.photon.constants.FilterTagUtils;
 import com.engobytes.addressor.photon.constants.PhotonAutoSearchParserConstants;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -12,7 +14,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.util.List;
-import java.util.Map;
 import java.util.TreeMap;
 
 @RestController
@@ -23,8 +24,8 @@ public class AutosearchAllowedTagsController {
     private PhotonAutoSearchParserConstants photonAutoSearchParserConstants;
 
     @PostMapping
-    public HttpStatus addAutoSearchTag(@RequestBody Map<String, String> tag) {
-        photonAutoSearchParserConstants.addAdditionalTag(tag);
+    public HttpStatus addAutoSearchTag(@RequestBody TagApi tag) {
+        photonAutoSearchParserConstants.addAdditionalTag(TagMapper.fromApi(tag));
         return HttpStatus.CREATED;
     }
 
@@ -34,8 +35,8 @@ public class AutosearchAllowedTagsController {
     }
 
     @DeleteMapping
-    public HttpStatus removeAutoSearchTag(@RequestBody Map<String, String> tag) {
-        photonAutoSearchParserConstants.removeTag(tag);
+    public HttpStatus removeAutoSearchTag(@RequestBody TagApi tag) {
+        photonAutoSearchParserConstants.removeTag(TagMapper.fromApi(tag));
         return HttpStatus.ACCEPTED;
     }
 }
