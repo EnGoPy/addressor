@@ -1,0 +1,36 @@
+{
+  "features": [
+    {
+      "geometry": {
+        "coordinates": [
+          17.9213319,
+          50.6676524
+        ],
+        "type": "Point"
+      },
+      "type": "Feature",
+      "properties": {
+        "osm_id": 207215819,
+        "extent": [
+          17.9212221,
+          50.6677165,
+          17.921579,
+          50.6676239
+        ],
+        "country": "Polska",
+        "city": "Opole",
+        "countrycode": "PL",
+        "postcode": "45-016",
+        "locality": "Stare Miasto",
+        "county": "Opole",
+        "type": "street",
+        "osm_type": "W",
+        "osm_key": "highway",
+        "osm_value": "residential",
+        "name": "Zamkowa",
+        "state": "województwo opolskie"
+      }
+    }
+  ],
+  "type": "FeatureCollection"
+}

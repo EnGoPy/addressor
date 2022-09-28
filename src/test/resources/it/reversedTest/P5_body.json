@@ -1,0 +1,30 @@
+{
+  "features": [
+    {
+      "geometry": {
+        "coordinates": [
+          17.9477785,
+          50.7193051
+        ],
+        "type": "Point"
+      },
+      "type": "Feature",
+      "properties": {
+        "osm_id": 2273620897,
+        "country": "Polska",
+        "city": "Luboszyce",
+        "countrycode": "PL",
+        "postcode": "46-022",
+        "county": "powiat opolski",
+        "type": "house",
+        "osm_type": "N",
+        "osm_key": "place",
+        "housenumber": "1",
+        "street": "Wodna",
+        "osm_value": "house",
+        "state": "województwo opolskie"
+      }
+    }
+  ],
+  "type": "FeatureCollection"
+}

@@ -1,0 +1,31 @@
+{
+  "features": [
+    {
+      "geometry": {
+        "coordinates": [
+          17.9239663,
+          50.6628794
+        ],
+        "type": "Point"
+      },
+      "type": "Feature",
+      "properties": {
+        "osm_id": 2171230456,
+        "country": "Polska",
+        "city": "Opole",
+        "countrycode": "PL",
+        "postcode": "45-077",
+        "locality": "Wyspa Pasieka",
+        "county": "Opole",
+        "type": "house",
+        "osm_type": "N",
+        "osm_key": "place",
+        "housenumber": "2",
+        "street": "Wojciecha Korfantego",
+        "osm_value": "house",
+        "state": "województwo opolskie"
+      }
+    }
+  ],
+  "type": "FeatureCollection"
+}

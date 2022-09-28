@@ -1,0 +1,37 @@
+{
+  "features": [
+    {
+      "geometry": {
+        "coordinates": [
+          17.9236974789131,
+          50.6679541
+        ],
+        "type": "Point"
+      },
+      "type": "Feature",
+      "properties": {
+        "osm_id": 207030235,
+        "extent": [
+          17.9235345,
+          50.6680424,
+          17.9238606,
+          50.6678701
+        ],
+        "country": "Polska",
+        "city": "Opole",
+        "countrycode": "PL",
+        "postcode": "45-018",
+        "locality": "Stare Miasto",
+        "county": "Opole",
+        "type": "house",
+        "osm_type": "W",
+        "osm_key": "building",
+        "housenumber": "9",
+        "street": "Krakowska",
+        "osm_value": "yes",
+        "state": "województwo opolskie"
+      }
+    }
+  ],
+  "type": "FeatureCollection"
+}

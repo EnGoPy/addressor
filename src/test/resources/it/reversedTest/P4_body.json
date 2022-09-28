@@ -1,0 +1,31 @@
+{
+  "features": [
+    {
+      "geometry": {
+        "coordinates": [
+          17.918023,
+          50.6693871
+        ],
+        "type": "Point"
+      },
+      "type": "Feature",
+      "properties": {
+        "osm_id": 974123980,
+        "country": "Polska",
+        "city": "Opole",
+        "countrycode": "PL",
+        "postcode": "45-081",
+        "locality": "Stare Miasto",
+        "county": "Opole",
+        "type": "house",
+        "osm_type": "N",
+        "osm_key": "tourism",
+        "street": "Piastowska",
+        "osm_value": "hotel",
+        "name": "Hotel Piast",
+        "state": "województwo opolskie"
+      }
+    }
+  ],
+  "type": "FeatureCollection"
+}
