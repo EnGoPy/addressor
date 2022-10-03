@@ -32,7 +32,7 @@ public class LocationAddressServiceImpl implements LocationAddressService {
         String searchAddressDescription = foundLocationByCoords.getDescription();
 
         if (searchAddressDescription.isEmpty()) {
-            throw new AddressNotFoundException("Address not found.");
+            throw new AddressNotFoundException("Address not found");
         }
 
         return new GeoPoint(lng, lat, searchAddressDescription);
