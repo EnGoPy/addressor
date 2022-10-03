@@ -3,3 +3,8 @@ label > * {
     font-size: 18px;
     display: inline-block;
 }
+
+form {
+    width: 49%;
+    display: inline-block;
+}

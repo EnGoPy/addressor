@@ -1,6 +1,7 @@
 import React, {useEffect, useState} from "react";
 import TagListItem from "./TagListItem";
 import CreateTagForm from "./CreateTagForm";
+import RemoveTagForm from "./RemoveTagForm";
 import config from "../config.json";
 
 const Reversed = () => {
@@ -31,9 +32,10 @@ const Reversed = () => {
 
     return (
         <>
-            <CreateTagForm callback={() => refreshTagList()} urlSufix={config.reversedTagUrl}/>
             <h2>Allowed tag pairs for reversed geocoding</h2>
             {validTags ? <TagListItem tags={reversedTags}/> : `Waiting for initialisation`}
+            <CreateTagForm callback={() => refreshTagList()} urlSufix={config.reversedTagUrl}/>
+            <RemoveTagForm callback={() => refreshTagList()} urlSufix={config.reversedTagUrl}/>
         </>
     )
 }

@@ -3,11 +3,11 @@ import config from "../config.json";
 import "./AutosearchForm.js.css"
 import TagApi from "../model/TagApi";
 
-const CreateTagForm = (props) => {
+const RemoveTagForm = (props) => {
 
     const [tag, setTag] = useState();
     const [key, setKey] = useState();
-    let postMessage = "";
+    let requestMessage = "";
 
     const refreshCallback = () => {
         console.log("Callback called!")
@@ -31,7 +31,7 @@ const CreateTagForm = (props) => {
         if (tag.length !== 0 && key.length !== 0) {
             let tagApi = new TagApi(tag, key);
             const requestOptions = {
-                method: `POST`,
+                method: `DELETE`,
                 headers: {
                     "Content-Type": "application/json"
                 },
@@ -47,7 +47,7 @@ const CreateTagForm = (props) => {
                 })
                 .then(() => refreshCallback())
                 .catch(
-                    postMessage = "Error"
+                    requestMessage = "Error"
                 )
         }
     }
@@ -57,7 +57,7 @@ const CreateTagForm = (props) => {
         <>
 
             <form className="border  border-3" onSubmit={(event) => handleSubmit(event)}>
-                <h4>Add tag-value pair</h4>
+                <h4>Remove tag-value pair</h4>
                 <label className="p-2" htmlFor="tag">
                     <div className="label-text ">Tag</div>
                     <input type="text" id="tag" name="tag" placeholder="tag" value={tag}
@@ -69,12 +69,12 @@ const CreateTagForm = (props) => {
                     <input type="text" id="key" name="key" placeholder="key" value={key}
                            onChange={(e) => handleChangeKey(e)}/>
                 </label>
-                <button className="btn-primary btn">Add</button>
-                {postMessage && <p className="alert-warning">{postMessage}</p>}
+                <button className="btn-primary btn">Remove</button>
+                {requestMessage && <p className="alert-warning">{requestMessage}</p>}
             </form>
         </>
 
     )
 }
 
-export default CreateTagForm;
+export default RemoveTagForm;

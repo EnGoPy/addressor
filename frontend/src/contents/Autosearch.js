@@ -2,6 +2,7 @@ import React, {useEffect, useState} from "react";
 import TagListItem from "./TagListItem";
 import CreateTagForm from "./CreateTagForm";
 import config from "../config.json";
+import RemoveTagForm from "./RemoveTagForm";
 
 
 const Autosearch = () => {
@@ -32,9 +33,10 @@ const Autosearch = () => {
 
     return (
         <>
-            <CreateTagForm callback={() => refreshTagList()} urlSufix={config.autoSearchTagUrl}/>
             <h2>Allowed tag pairs for autosearch</h2>
             {validTags ? <TagListItem tags={autoSearchTags}/> : `Waiting for initialisation`}
+            <CreateTagForm callback={() => refreshTagList()} urlSufix={config.autoSearchTagUrl}/>
+            <RemoveTagForm callback={() => refreshTagList()} urlSufix={config.autoSearchTagUrl}/>
         </>
     )
 }
