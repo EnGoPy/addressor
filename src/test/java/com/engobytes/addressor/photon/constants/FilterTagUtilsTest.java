@@ -68,7 +68,7 @@ class FilterTagUtilsTest {
 
         FilterTagUtils.addKeyValues(tagPairs, key, values);
 
-        assertNull(tagPairs);
+        assertTrue(tagPairs.isEmpty());
     }
 
     @Test

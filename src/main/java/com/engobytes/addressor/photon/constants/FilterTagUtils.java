@@ -7,6 +7,7 @@ import org.springframework.lang.Nullable;
 
 import java.util.List;
 import java.util.Map;
+import java.util.Objects;
 import java.util.Set;
 import java.util.TreeMap;
 import java.util.stream.Collectors;
@@ -29,6 +30,7 @@ public class FilterTagUtils {
     }
 
     public static void addKeyValues(@Nullable Set<Pair<String, String>> tagPairs, @Nullable String key, Set<String> values) {
+        Objects.nonNull(tagPairs);
         if (tagPairs == null || key == null) {
             log.warn("Null parameter passed to method. Breaking execution. tagPairs: {} , key: {} ",
                     tagPairs == null, key == null);
