@@ -1,0 +1,5 @@
+{
+  "backend-url": "http://localhost:2300",
+  "reversedTagUrl": "/reverse/tags",
+  "autoSearchTagUrl": "/autosearch/tags"
+}
