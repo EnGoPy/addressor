@@ -1,7 +1,5 @@
 HELP.md
-.gradle
 build/
-!gradle/wrapper/gradle-wrapper.jar
 !**/src/main/**/build/
 !**/src/test/**/build/
 
@@ -45,9 +43,12 @@ out/
 
 # testing
 /frontend/coverage
+./logs
+./target
 
 # production
 /frontend/build
+/frontend/node
 
 # misc
 /frontend/DS_Store
