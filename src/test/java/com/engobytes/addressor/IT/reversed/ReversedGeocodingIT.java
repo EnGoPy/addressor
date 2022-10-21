@@ -45,6 +45,8 @@ public class ReversedGeocodingIT {
     private final static LatLng P3 = new LatLng(50.662960, 17.9238);
     private final static LatLng P4 = new LatLng(50.670028, 17.917389);
     private final static LatLng P5 = new LatLng(50.720507, 17.948719);
+    private static final String PHOTON_IP = "localhost";
+    private static final String PHOTON_PORT = "2300";
     private static final String PHOTON_BASE_URL = "localhost:2300";
     private static final String REVERSE_GEOCODE_URL = "/api/v1/getAddress";
     private static final String REVERSE_GEOCODE_TAG_CONTROLLER_URL = "/reverse/tags";
@@ -78,7 +80,8 @@ public class ReversedGeocodingIT {
         MockitoAnnotations.openMocks(this);
         photonGateway = new ConnectionPhotonAutoSearchGateway(restTemplate, propertySettings);
         mockServer = MockRestServiceServer.createServer(restTemplate);
-        when(propertySettings.getSearchPhotonUrl()).thenReturn(PHOTON_BASE_URL);
+        when(propertySettings.getPhotonIp()).thenReturn(PHOTON_IP);
+        when(propertySettings.getPhotonPort()).thenReturn(PHOTON_PORT);
         mockMvc = MockMvcBuilders.webAppContextSetup(webApplicationContext).build();
     }
 

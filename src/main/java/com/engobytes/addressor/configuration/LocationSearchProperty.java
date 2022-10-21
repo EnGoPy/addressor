@@ -20,8 +20,11 @@ import java.util.Map;
 public class LocationSearchProperty {
 
 
-    @Value("${photon.url}")
-    private String searchPhotonUrl;
+    @Value("${photon.ip}")
+    private String photonIp;
+
+    @Value("${photon.port}")
+    private String photonPort;
 
     @Value("#{new Boolean('${map.location.reverseGeocode.filtering.enable:true}')}")
     private Boolean reverseGeocodingFiltering;
@@ -83,7 +86,8 @@ public class LocationSearchProperty {
     @ReadOperation
     public WebEndpointResponse<Map> info() {
         Map<String, Object> info = new HashMap<>();
-        info.put("searchPhotonUrl", getSearchPhotonUrl());
+        info.put("photonIp", getPhotonIp());
+        info.put("photonPort", getPhotonPort());
         info.put("reverseGeocodingFiltering", getReverseGeocodingFiltering());
         info.put("filterAutosearchWithAllowedTags", getFilterAutosearchWithAllowedTags());
         info.put("autoSearchResultLimit", getAutoSearchResultLimit());

@@ -9,7 +9,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Component;
-import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.client.RestTemplate;
 
 import javax.annotation.PostConstruct;
@@ -52,9 +51,17 @@ public class ConnectionPhotonAutoSearchGateway {
         }while(probeCounter <= retryCount);
 
         if(success){
-            log.info("Successfully found photon on {}, attempts count {}", propertySettings.getSearchPhotonUrl(), probeCounter);
+            log.info("Successfully found photon on IP {} and PORT {}, attempts count {}",
+                    propertySettings.getPhotonIp(),
+                    propertySettings.getPhotonPort(),
+                    probeCounter);
         }else{
-            log.warn("Initial handshake with photon failed");
+            log.trace("TRACE LOG");
+            log.info("INFO LOG");
+            log.debug("DEBUG LOG");
+            log.warn("Initial handshake with photon on IP {} and PORT {} failed",
+                    propertySettings.getPhotonIp(),
+                    propertySettings.getPhotonPort());
         }
     }
 
@@ -62,7 +69,7 @@ public class ConnectionPhotonAutoSearchGateway {
         LOGGER.debug("Use reversed geo-coding with photon");
 
         String url = "http://" +
-                propertySettings.getSearchPhotonUrl() +
+                propertySettings.getPhotonIp() +":"+ propertySettings.getPhotonPort() +
                 "/reverse?lon=" +
                 lon +
                 "&lat=" +
@@ -75,7 +82,7 @@ public class ConnectionPhotonAutoSearchGateway {
         LOGGER.debug("Use autosearch with photon");
         StringBuilder url = new StringBuilder(
                 String.format("http://"
-                                +propertySettings.getSearchPhotonUrl()
+                                + propertySettings.getPhotonIp() +":"+ propertySettings.getPhotonPort()
                                 +"/api/?q=%s&lang=en",
                         location));
         if(propertySettings.getAutoSearchPhotonRequestLimit() != 0){
@@ -104,7 +111,7 @@ public class ConnectionPhotonAutoSearchGateway {
     }
 
     private boolean successHandShakeWithPhotonInternal(){
-        String u = propertySettings.getSearchPhotonUrl().concat("/api?q");
+        String u = "http://"+propertySettings.getPhotonIp().concat(":").concat(propertySettings.getPhotonPort()).concat("/api?q");
         ResponseEntity<String> response;
                 try{
                     response = restTemplate.getForEntity(u, String.class);

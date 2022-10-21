@@ -2,7 +2,8 @@ server:
   port: 2300
 
 photon:
-  url: "localhost:2322"
+  ip: "localhost"
+  port: 2322
 
 map:
   location:
