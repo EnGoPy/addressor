@@ -7,35 +7,40 @@ import config from "../config.json";
 const Reversed = () => {
 
     const [reversedTags, setReversedTags] = useState();
-    const [fetchedData, setFetchedData] = useState(false);
     const [validTags, setValidTags] = useState();
+    const [uiRefreshTrigger, setUiRefreshTrigger] = useState(false)
 
     useEffect(() => {
-        fetch("http://localhost:2300/reverse/tags")
+        const controller = new AbortController();
+        const signal = controller.signal;
+        fetch("http://localhost:2300/reverse/tags", {signal})
             .then(res => res.json()
             )
             .then(json => {
-                    setReversedTags(json)
-                    // setFetchedData(true)
-                    setValidTags(true)
+                    if (!signal.aborted) {
+                        setReversedTags(json)
+                        setValidTags(true)
+                    }
                 }
             )
             .catch(() => {
                 setValidTags(false);
-                console.log("Unable to fetch data from API")
             })
-    }, [validTags]);
+        return () => {
+            setValidTags(false);
+        }
+    }, [uiRefreshTrigger]);
 
     const refreshTagList = () => {
-        setValidTags(false);
+        setUiRefreshTrigger((prev) => !prev);
     }
 
     return (
         <>
             <h2>Allowed tag pairs for reversed geocoding</h2>
-            {validTags ? <TagListItem tags={reversedTags}/> : `Waiting for initialisation`}
+            {validTags ? <TagListItem tags={reversedTags} refreshCallback={() => refreshTagList()}
+                                      removeUrl={config.reversedTagUrl}/> : `Waiting for initialisation`}
             <CreateTagForm callback={() => refreshTagList()} urlSufix={config.reversedTagUrl}/>
-            <RemoveTagForm callback={() => refreshTagList()} urlSufix={config.reversedTagUrl}/>
         </>
     )
 }
