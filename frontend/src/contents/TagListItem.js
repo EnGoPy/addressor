@@ -39,16 +39,16 @@ const TagListItem = (props) => {
             // console.log(wikiBaseUrl);
 
             return (
-                <div key={key+singleValue} className="row border border-secondary">
+                <div key={key+singleValue} className="row py-1 border border-start">
                     <div className="col">
                         {singleValue}
                     </div>
-                    <div className="col">
+                    <div className="col-2">
                         <a href={wikiBaseUrl} title="OSM wiki">
                             <InfoIcon className="ui-priority-primary"/>
                         </a>
                     </div>
-                    <div className="col">
+                    <div className="col-3">
                         <button  type="button" className="btn btn-danger btn-sm" onClick={() => handleRemove(key, singleValue)}  title="Remove">
                             Remove
                         </button>

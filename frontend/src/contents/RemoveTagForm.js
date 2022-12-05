@@ -35,7 +35,6 @@ const RemoveTagForm = (props) => {
                 headers: {
                     "Content-Type": "application/json"
                 },
-                // body: `{"${tag}":"${key}"}`
                 body: JSON.stringify(tagApi)
             };
             console.log('Doing a request : ' + requestOptions)
