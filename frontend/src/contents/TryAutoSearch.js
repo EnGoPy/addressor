@@ -4,6 +4,7 @@ import AutoSuggestionObject from "./AutoSuggestionObject";
 const TryAutoSearch = () => {
     const [searchWord, setSearchWord] = useState("");
     const [suggestions, setSuggestions] = useState();
+    const [suggestionsLoaded, setSuggestionsLoaded] = useState(false);
 
     const onInput = (e) => {
         let inputValue = e.target.value;
@@ -29,7 +30,7 @@ const TryAutoSearch = () => {
                         })
                         setSuggestionsLoaded(prev => true);
                     } else {
-                        setSuggestionsLoaded(prev => false)
+                        setSuggestionsLoaded(prev => false);
                     }
                 })
                 .catch(() => {
@@ -44,8 +45,10 @@ const TryAutoSearch = () => {
         <>
             <div className="border  border-3 my-2">
                 <h3>Try autosearch response</h3>
-                <label htmlFor="searchValue">Type autosearchValue</label>
-                <input name="searchValue" onChange={(event) => onInput(event)} value={searchWord}/>
+                <div className="pb-3">
+                    <label htmlFor="searchValue">Type autosearchValue</label>
+                    <input name="searchValue" size="30" onChange={(event) => onInput(event)} value={searchWord}/>
+                </div>
                 <table className="table table-hover">
                     <thead className="">
                     {/*<th scope="col">#</th>*/}
@@ -58,6 +61,9 @@ const TryAutoSearch = () => {
                     {suggestions}
                     </tbody>
                 </table>
+                <h5>
+                    {!suggestionsLoaded ? `No autosearch results found` : ''}
+                </h5>
             </div>
         </>
     )

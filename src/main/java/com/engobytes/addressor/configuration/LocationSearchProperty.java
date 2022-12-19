@@ -9,6 +9,7 @@ import org.springframework.boot.actuate.endpoint.web.annotation.EndpointWebExten
 import org.springframework.boot.actuate.info.InfoEndpoint;
 import org.springframework.stereotype.Component;
 
+import javax.annotation.PostConstruct;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -62,10 +63,15 @@ public class LocationSearchProperty {
     @Getter(AccessLevel.NONE)
     private List<Double> boundaryBox = new ArrayList<>();
 
+    @PostConstruct
+    private void setUp(){
+        initializeBbox();
+    }
+
     public String getBoundaryForPhotonUrl(){
         String bboxAsString = "";
-        for(int i=0; i < getBoundaryBox().size(); i++){
-            bboxAsString = bboxAsString.concat(getBoundaryBox().get(i).toString());
+        for(int i=1; i <= boundaryBox.size(); i++){
+            bboxAsString = bboxAsString.concat(boundaryBox.get(i-1).toString());
             if(i < getBoundaryBox().size()){
                 bboxAsString = bboxAsString.concat(",");
             }
@@ -73,15 +79,7 @@ public class LocationSearchProperty {
         return bboxAsString;
     }
 
-    private List<Double> getBoundaryBox(){
-        if(boundaryBox.isEmpty()){
-            boundaryBox.add(westernSearchBoundary);
-            boundaryBox.add(southSearchBoundary);
-            boundaryBox.add(easternSearchBoundary);
-            boundaryBox.add(northSearchBoundary);
-        }
-        return boundaryBox;
-    }
+
 
     @ReadOperation
     public WebEndpointResponse<Map> info() {
@@ -103,5 +101,18 @@ public class LocationSearchProperty {
         wrapper.put("appProperties", info);
 
         return new WebEndpointResponse<>(wrapper);
+    }
+
+    private List<Double> getBoundaryBox(){
+        return boundaryBox;
+    }
+
+    private void initializeBbox(){
+        if(boundaryBox.isEmpty()){
+            boundaryBox.add(westernSearchBoundary);
+            boundaryBox.add(northSearchBoundary);
+            boundaryBox.add(easternSearchBoundary);
+            boundaryBox.add(southSearchBoundary);
+        }
     }
 }
