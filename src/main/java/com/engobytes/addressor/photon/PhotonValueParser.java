@@ -27,7 +27,7 @@ public class PhotonValueParser {
                     .stream()
                     .filter(location -> properties.getAllowedCountryCodes().contains(location.getProperties().getCountrycode()))
                     .filter(location -> {
-                        if (properties.getReverseGeocodingFiltering()) {
+                        if (properties.isReverseGeocodingFiltering()) {
                             String key = location.getProperties().getOsm_key();
                             String value = location.getProperties().getOsm_value();
                             return PhotonReverseGeoCodingParserConstant.REVERSED_GC_TAG_PARIS.contains(Pair.of(key, value));
@@ -50,7 +50,7 @@ public class PhotonValueParser {
                     .stream()
                     .filter(location -> properties.getAllowedCountryCodes().contains(location.getProperties().getCountrycode()))
                     .filter(location -> {
-                        if (properties.getFilterAutosearchWithAllowedTags()) {
+                        if (properties.isFilterAutosearchWithAllowedTags()) {
                             String key = location.getProperties().getOsm_key();
                             String value = location.getProperties().getOsm_value();
 

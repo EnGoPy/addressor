@@ -27,11 +27,9 @@ public class LocationSearchProperty {
     @Value("${photon.port}")
     private String photonPort;
 
-    @Value("#{new Boolean('${map.location.reverseGeocode.filtering.enable:true}')}")
-    private Boolean reverseGeocodingFiltering;
+    private boolean reverseGeocodingFiltering = true;
 
-    @Value("#{new Boolean('${map.location.autosearch.filtering.enable:true}')}")
-    private Boolean filterAutosearchWithAllowedTags;
+    private boolean filterAutosearchWithAllowedTags = true;
 
     @Value("${map.location.autosearch.filtering.photon.limit:0}") //0 value means we don't limit photon at all
     private int autoSearchPhotonRequestLimit;
@@ -79,15 +77,21 @@ public class LocationSearchProperty {
         return bboxAsString;
     }
 
+    public void setReverseGeocodingFiltering(boolean reverseGeocodingFiltering) {
+        this.reverseGeocodingFiltering = reverseGeocodingFiltering;
+    }
 
+    public void setFilterAutosearchWithAllowedTags(boolean filterAutosearchWithAllowedTags) {
+        this.filterAutosearchWithAllowedTags = filterAutosearchWithAllowedTags;
+    }
 
     @ReadOperation
     public WebEndpointResponse<Map> info() {
         Map<String, Object> info = new HashMap<>();
         info.put("photonIp", getPhotonIp());
         info.put("photonPort", getPhotonPort());
-        info.put("reverseGeocodingFiltering", getReverseGeocodingFiltering());
-        info.put("filterAutosearchWithAllowedTags", getFilterAutosearchWithAllowedTags());
+        info.put("reverseGeocodingFiltering", isReverseGeocodingFiltering());
+        info.put("filterAutosearchWithAllowedTags", isFilterAutosearchWithAllowedTags());
         info.put("autoSearchResultLimit", getAutoSearchResultLimit());
         info.put("allowedCountryCodes", getAllowedCountryCodes());
         info.put("includeCities", getIncludeCities());

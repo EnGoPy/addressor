@@ -2,5 +2,7 @@
   "backend-url": "http://localhost:2300",
   "reversedTagUrl": "/reverse/tags",
   "autoSearchTagUrl": "/autosearch/tags",
+  "autoSearchSettings": "/settings/autosearch",
+  "reversedSettings": "/settings/reversed",
   "OSM_wikiTagAddress": "https://wiki.openstreetmap.org/wiki/Tag:{key}%3D{value}"
 }

@@ -3,6 +3,7 @@ import TagListItem from "./TagListItem";
 import CreateTagForm from "./CreateTagForm";
 import TryAutoSearch from "./TryAutoSearch";
 import config from "../config.json";
+import AutosearchSettings from "./AutosearchSettings";
 
 
 const Autosearch = () => {
@@ -39,6 +40,9 @@ const Autosearch = () => {
 
     return (
         <>
+            <div className="row">
+                <AutosearchSettings/>
+            </div>
             <div className="row">
                 <div className="col-5">
                     <h3>Allowed tag pairs for autosearch</h3>
