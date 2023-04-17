@@ -1,6 +1,7 @@
 package com.engobytes.addressor.api.controller;
 
 import com.engobytes.addressor.api.model.AutosearchSettingsApi;
+import com.engobytes.addressor.api.model.ReversedSettingsApi;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -32,6 +33,18 @@ public class SettingsController {
                 .northBoundary(10)
                 .eastBoundary(23)
                 .southBoundary(42)
+                .build();
+    }
+
+    @PostMapping(value = "/reversed")
+    public HttpStatus setReversedSettings(@RequestBody ReversedSettingsApi settings){
+        return HttpStatus.OK;
+    }
+
+    @GetMapping(value = "/reversed")
+    public ReversedSettingsApi getReversedSettings(){
+        return ReversedSettingsApi.builder()
+                .enableFiltering(true)
                 .build();
     }
 

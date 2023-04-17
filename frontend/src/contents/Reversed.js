@@ -3,6 +3,7 @@ import TagListItem from "./TagListItem";
 import CreateTagForm from "./CreateTagForm";
 import RemoveTagForm from "./RemoveTagForm";
 import config from "../config.json";
+import ReversedSettings from "./ReversedSettings";
 
 const Reversed = () => {
 
@@ -37,6 +38,9 @@ const Reversed = () => {
 
     return (
         <>
+            <div className="row">
+                <ReversedSettings/>
+            </div>
             <h2>Allowed tag pairs for reversed geocoding</h2>
             {validTags ? <TagListItem tags={reversedTags} refreshCallback={() => refreshTagList()}
                                       removeUrl={config.reversedTagUrl}/> : `Waiting for initialisation`}

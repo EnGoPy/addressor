@@ -132,7 +132,7 @@ const AutosearchSettings = () => {
         };
         console.log("newSettings :" + newSettings);
         console.log("newSettings stringify :" + JSON.stringify(newSettings));
-        fetch(config["backend-url"] + config["autoSearchSettings"],
+        fetch(config["backend-url"] + config.autoSearchSettings,
             requestOptions)
             .then((res) => {
                 console.log("Sending to API!!")
