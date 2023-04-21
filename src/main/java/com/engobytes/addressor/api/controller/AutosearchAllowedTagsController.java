@@ -1,7 +1,7 @@
 package com.engobytes.addressor.api.controller;
 
 import com.engobytes.addressor.api.model.TagApi;
-import com.engobytes.addressor.configuration.LocationSearchProperty;
+import com.engobytes.addressor.configuration.SearchProperties;
 import com.engobytes.addressor.mapper.TagMapper;
 import com.engobytes.addressor.photon.constants.FilterTagUtils;
 import com.engobytes.addressor.photon.constants.PhotonAutoSearchParserConstants;
@@ -31,7 +31,7 @@ public class AutosearchAllowedTagsController {
     @Autowired
     private PhotonAutoSearchParserConstants photonAutoSearchParserConstants;
     @Autowired
-    private LocationSearchProperty locationSearchProperty;
+    private SearchProperties searchProperties;
 
     @PostMapping
     public HttpStatus addAutoSearchTag(@RequestBody TagApi tag) {
@@ -47,7 +47,7 @@ public class AutosearchAllowedTagsController {
 
     @PatchMapping(value = "/filtering")
     public HttpStatus toggleAutosearchFiltering(@RequestParam boolean filteringState){
-        locationSearchProperty.setFilterAutosearchWithAllowedTags(filteringState);
+        searchProperties.setFilterAutosearchWithAllowedTags(filteringState);
         return HttpStatus.OK;
     }
 

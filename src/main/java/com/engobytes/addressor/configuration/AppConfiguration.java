@@ -9,7 +9,7 @@ import org.springframework.web.client.RestTemplate;
 public class AppConfiguration {
 
     @Autowired
-    LocationSearchProperty locationSearchProperty;
+    SearchProperties searchProperties;
 
     @Bean
     public RestTemplate getRestTemplate(){

@@ -18,9 +18,9 @@ public class AutosearchSettingsApi {
     private int filteringLimit;
     private int photonApiLimit;
     private boolean useBoundary;
-    private float westBoundary;
-    private float northBoundary;
-    private float eastBoundary;
-    private float southBoundary;
+    private double westBoundary;
+    private double northBoundary;
+    private double eastBoundary;
+    private double southBoundary;
 
 }

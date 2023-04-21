@@ -4,7 +4,7 @@ import com.adelean.inject.resources.junit.jupiter.GivenTextResource;
 import com.adelean.inject.resources.junit.jupiter.TestWithResources;
 import com.engobytes.addressor.api.controller.LocationController;
 import com.engobytes.addressor.api.model.TagApi;
-import com.engobytes.addressor.configuration.LocationSearchProperty;
+import com.engobytes.addressor.configuration.SearchProperties;
 import com.engobytes.addressor.photon.ConnectionPhotonAutoSearchGateway;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -69,7 +69,7 @@ public class ReversedGeocodingIT {
     private MockRestServiceServer mockServer;
 
     @Spy
-    private LocationSearchProperty propertySettings;
+    private SearchProperties propertySettings;
     private ConnectionPhotonAutoSearchGateway photonGateway;
 
     @InjectMocks

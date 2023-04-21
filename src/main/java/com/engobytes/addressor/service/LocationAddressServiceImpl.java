@@ -2,7 +2,7 @@ package com.engobytes.addressor.service;
 
 import com.engobytes.addressor.api.model.AutoFillResponse;
 import com.engobytes.addressor.api.model.AutofillLocationDescription;
-import com.engobytes.addressor.configuration.LocationSearchProperty;
+import com.engobytes.addressor.configuration.SearchProperties;
 import com.engobytes.addressor.exception.AddressNotFoundException;
 import com.engobytes.addressor.service.model.AutoFillSuggestion;
 import com.engobytes.addressor.service.model.GeoPoint;
@@ -22,7 +22,7 @@ public class LocationAddressServiceImpl implements LocationAddressService {
     @Autowired
     private ReverseGeocodeService reverseGeocodeService;
     @Autowired
-    private LocationSearchProperty locationSearchProperty;
+    private SearchProperties searchProperties;
 
     @Override
     public GeoPoint getAddressFromGeoCords(double lng, double lat) {
@@ -42,7 +42,7 @@ public class LocationAddressServiceImpl implements LocationAddressService {
     public List<AutoFillResponse> getLocationsSuggestionsByNamePart(String searchPhrase) {
         List<AutoFillSuggestion> osmSuggestions = autoSearchService.getPropositionsByNamePart(searchPhrase);
         return osmSuggestions.stream()
-                .limit(locationSearchProperty.getAutoSearchResultLimit())
+                .limit(searchProperties.getAutoSearchResultLimit())
                 .map(suggestion -> {
                     AutofillLocationDescription autofillLocationDescription =
                             new AutofillLocationDescription(suggestion.getTitle(), suggestion.getAddress(), WordParser.findMatchingPairsInString(suggestion.getTitle(), searchPhrase));

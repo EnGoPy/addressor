@@ -1,6 +1,6 @@
 package com.engobytes.addressor.photon;
 
-import com.engobytes.addressor.configuration.LocationSearchProperty;
+import com.engobytes.addressor.configuration.SearchProperties;
 import com.engobytes.addressor.photon.model.PhotonResponse;
 import lombok.extern.slf4j.Slf4j;
 import org.slf4j.Logger;
@@ -19,11 +19,11 @@ import javax.validation.constraints.NotNull;
 public class ConnectionPhotonAutoSearchGateway {
     private static final Logger LOGGER = LoggerFactory.getLogger(ConnectionPhotonAutoSearchGateway.class);
     private final RestTemplate restTemplate;
-    private final LocationSearchProperty propertySettings;
+    private final SearchProperties propertySettings;
 
     public ConnectionPhotonAutoSearchGateway(
             @Autowired  RestTemplate restTemplate,
-            @Autowired @NotNull LocationSearchProperty propertySettings) {
+            @Autowired @NotNull SearchProperties propertySettings) {
         this.restTemplate = restTemplate;
         this.propertySettings = propertySettings;
     }

@@ -1,7 +1,9 @@
 package com.engobytes.addressor.configuration;
 
+import com.engobytes.addressor.api.model.SearchPropertiesModel;
 import lombok.AccessLevel;
 import lombok.Getter;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.actuate.endpoint.annotation.ReadOperation;
 import org.springframework.boot.actuate.endpoint.web.WebEndpointResponse;
@@ -16,9 +18,10 @@ import java.util.List;
 import java.util.Map;
 
 @Component
+@Slf4j
 @EndpointWebExtension(endpoint = InfoEndpoint.class)
 @Getter
-public class LocationSearchProperty {
+public class SearchProperties {
 
 
     @Value("${photon.ip}")
@@ -63,6 +66,10 @@ public class LocationSearchProperty {
 
     @PostConstruct
     private void setUp(){
+        log.info("S {}", southSearchBoundary);
+        log.info("N {}", northSearchBoundary);
+        log.info("E {}", easternSearchBoundary);
+        log.info("W {}", westernSearchBoundary);
         initializeBbox();
     }
 
@@ -83,6 +90,22 @@ public class LocationSearchProperty {
 
     public void setFilterAutosearchWithAllowedTags(boolean filterAutosearchWithAllowedTags) {
         this.filterAutosearchWithAllowedTags = filterAutosearchWithAllowedTags;
+    }
+
+    public SearchPropertiesModel getProperties(){
+        return SearchPropertiesModel.builder()
+                .reverseGeocodingFiltering(reverseGeocodingFiltering)
+                .filterAutosearchWithAllowedTags(filterAutosearchWithAllowedTags)
+                .autoSearchPhotonRequestLimit(autoSearchPhotonRequestLimit)
+                .autoSearchResultLimit(autoSearchResultLimit)
+                .allowedCountryCodes(allowedCountryCodes)
+                .includeCities(includeCities)
+                .useBoundaryBox(useBoundaryBox)
+                .westernSearchBoundary(westernSearchBoundary)
+                .southSearchBoundary(southSearchBoundary)
+                .easternSearchBoundary(easternSearchBoundary)
+                .northSearchBoundary(northSearchBoundary)
+                .build();
     }
 
     @ReadOperation

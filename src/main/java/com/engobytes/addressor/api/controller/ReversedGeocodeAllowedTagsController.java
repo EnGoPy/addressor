@@ -1,7 +1,7 @@
 package com.engobytes.addressor.api.controller;
 
 import com.engobytes.addressor.api.model.TagApi;
-import com.engobytes.addressor.configuration.LocationSearchProperty;
+import com.engobytes.addressor.configuration.SearchProperties;
 import com.engobytes.addressor.mapper.TagMapper;
 import com.engobytes.addressor.photon.constants.FilterTagUtils;
 import com.engobytes.addressor.photon.constants.PhotonReverseGeoCodingParserConstant;
@@ -31,7 +31,7 @@ public class ReversedGeocodeAllowedTagsController {
     @Autowired
     private PhotonReverseGeoCodingParserConstant photonReverseGeoCodingParserConstant;
     @Autowired
-    private LocationSearchProperty locationSearchProperty;
+    private SearchProperties searchProperties;
 
     @PostMapping
     public HttpStatus addReverseGeocodeTag(@RequestBody TagApi tag) {
@@ -47,7 +47,7 @@ public class ReversedGeocodeAllowedTagsController {
 
     @PatchMapping(value = "/filtering")
     public HttpStatus toggleReversedFiltering(@RequestParam boolean filteringState){
-        locationSearchProperty.setReverseGeocodingFiltering(filteringState);
+        searchProperties.setReverseGeocodingFiltering(filteringState);
         return HttpStatus.OK;
     }
 

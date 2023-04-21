@@ -1,6 +1,6 @@
 package com.engobytes.addressor.photon;
 
-import com.engobytes.addressor.configuration.LocationSearchProperty;
+import com.engobytes.addressor.configuration.SearchProperties;
 import com.engobytes.addressor.photon.model.PhotonResponse;
 import com.engobytes.addressor.service.ReverseGeocodeService;
 import com.engobytes.addressor.service.model.GeoPoint;
@@ -12,7 +12,7 @@ import org.springframework.stereotype.Service;
 public class PhotonReverseGeocodeService implements ReverseGeocodeService {
 
     @Autowired
-    LocationSearchProperty propertySettings;
+    SearchProperties propertySettings;
     @Autowired
     ConnectionPhotonAutoSearchGateway connectionPhotonAutoSearchGateway;
 

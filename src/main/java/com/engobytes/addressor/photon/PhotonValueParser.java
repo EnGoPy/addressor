@@ -1,6 +1,6 @@
 package com.engobytes.addressor.photon;
 
-import com.engobytes.addressor.configuration.LocationSearchProperty;
+import com.engobytes.addressor.configuration.SearchProperties;
 import com.engobytes.addressor.photon.constants.PhotonAutoSearchParserConstants;
 import com.engobytes.addressor.photon.constants.PhotonReverseGeoCodingParserConstant;
 import com.engobytes.addressor.photon.model.PhotonLocation;
@@ -20,7 +20,7 @@ import java.util.stream.Collectors;
 public class PhotonValueParser {
 
     public static GeoPoint parseReverseGeoCodeResponse(LatLng coordinates, PhotonResponse autoSearchResponse,
-                                                       LocationSearchProperty properties) {
+                                                       SearchProperties properties) {
         GeoPoint foundProposition = new GeoPoint(coordinates.lng, coordinates.lat, "");
         if (!autoSearchResponse.getFeatures().isEmpty()) {
             Optional<String> description = autoSearchResponse.getFeatures()
@@ -43,7 +43,7 @@ public class PhotonValueParser {
     }
 
     public static List<AutoFillSuggestion> parseAutoSearchResponse(PhotonResponse autoSearchResponse,
-                                                                   LocationSearchProperty properties) {
+                                                                   SearchProperties properties) {
         List<AutoFillSuggestion> foundPropositions = new ArrayList<>();
         if (!autoSearchResponse.getFeatures().isEmpty()) {
             foundPropositions = autoSearchResponse.getFeatures()

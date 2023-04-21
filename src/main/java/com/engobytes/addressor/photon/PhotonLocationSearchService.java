@@ -1,6 +1,6 @@
 package com.engobytes.addressor.photon;
 
-import com.engobytes.addressor.configuration.LocationSearchProperty;
+import com.engobytes.addressor.configuration.SearchProperties;
 import com.engobytes.addressor.photon.model.PhotonResponse;
 import com.engobytes.addressor.service.AutoSearchService;
 import com.engobytes.addressor.service.model.AutoFillSuggestion;
@@ -14,14 +14,14 @@ import java.util.stream.Collectors;
 public class PhotonLocationSearchService implements AutoSearchService {
 
     @Autowired
-    LocationSearchProperty locationSearchProperty;
+    SearchProperties searchProperties;
     @Autowired
     ConnectionPhotonAutoSearchGateway connectionPhotonAutoSearchGateway;
 
     @Override
     public List<AutoFillSuggestion> getPropositionsByNamePart(String location) {
         PhotonResponse photonAutosearchResponse = connectionPhotonAutoSearchGateway.getPropositionsByName(location);
-        List<AutoFillSuggestion> autoFillSuggestions = PhotonValueParser.parseAutoSearchResponse(photonAutosearchResponse, locationSearchProperty);
+        List<AutoFillSuggestion> autoFillSuggestions = PhotonValueParser.parseAutoSearchResponse(photonAutosearchResponse, searchProperties);
         return filterOutTitleDuplicates(autoFillSuggestions);
     }
 
