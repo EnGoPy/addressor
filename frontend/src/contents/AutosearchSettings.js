@@ -7,7 +7,7 @@ import {isValidCord, latitudeCordIsValid, longitudeCordIsValid} from "../validat
 import {coordValidationMessages} from "../validation/ValidationErrorMessages";
 import data from "bootstrap/js/src/dom/data";
 import AutosearchSettingsModel from "../model/AutosearchSettingsModel";
-import {allowedCitiesAreValid} from "../validation/StringValidator";
+import {allowedNamesAreValid} from "../validation/StringValidator";
 
 
 const AutosearchSettings = () => {
@@ -16,6 +16,7 @@ const AutosearchSettings = () => {
     let [dataLoaded, setDataLoaded] = useState(false);
     let [settings, setSettings] = useState(new AutosearchSettingsModel(
         false,
+        "",
         "",
         5,
         5,
@@ -30,7 +31,8 @@ const AutosearchSettings = () => {
         north: null,
         west: null,
         south: null,
-        allowedCities: null
+        allowedCities: null,
+        allowedCountryCodes: null
     })
 
     useEffect(() => {
@@ -44,6 +46,7 @@ const AutosearchSettings = () => {
                         setSettings(prev => new AutosearchSettingsModel(
                             json.enableFiltering,
                             json.allowedCities,
+                            json.allowedCountryCodes,
                             json.filteringLimit,
                             json.photonApiLimit,
                             json.useBoundary,
@@ -105,7 +108,8 @@ const AutosearchSettings = () => {
         formValidated = formValidated && validateCoordInput("north", settings.northBoundary.valueOf());
         formValidated = formValidated && validateCoordInput("west", settings.westBoundary.valueOf());
         formValidated = formValidated && validateCoordInput("south", settings.southBoundary.valueOf());
-        formValidated = formValidated && validateAllowedCities(settings.allowedCities);
+        formValidated = formValidated && validateAllowedNames(settings.allowedCities, "allowedCities");
+        formValidated = formValidated && validateAllowedNames(settings.allowedCountryCodes, "allowedCountryCodes");
 
         if (!formValidated) {
             console.log("Form is not valid.")
@@ -116,6 +120,7 @@ const AutosearchSettings = () => {
         let newSettings = new AutosearchSettingsModel(
             settings.enableFiltering,
             settings.allowedCities.trim(","),
+            settings.allowedCountryCodes.trim(","),
             settings.filteringLimit,
             settings.photonApiLimit,
             settings.useBoundary,
@@ -175,13 +180,13 @@ const AutosearchSettings = () => {
         }
     }
 
-    const validateAllowedCities = (allowedCities) => {
-        let citiesInputIsValid = allowedCitiesAreValid(allowedCities);
-        setFieldValidation({...fieldValidation, allowedCities: citiesInputIsValid})
-        citiesInputIsValid
-            ? console.log("Allowed cities are valid")
-            : console.log("Allowed cities are not valid")
-        return citiesInputIsValid;
+    const validateAllowedNames = (allowedNames, testedValue) => {
+        let namesInputIsValid = allowedNamesAreValid(allowedNames);
+        setFieldValidation({...fieldValidation, [testedValue]: namesInputIsValid})
+        namesInputIsValid
+            ? console.log("Allowed %s are valid", testedValue)
+            : console.log("Allowed %s are not valid", testedValue)
+        return namesInputIsValid;
     }
 
     return (
@@ -221,6 +226,9 @@ const AutosearchSettings = () => {
                                         text={"Max Adressor API response count"}
                                     />
                                 </div>
+
+                            </div>
+                            <div className="col">
                                 <div className="row">
                                     <InputNumberProperty
                                         callback={(e) => setStringParameter(e, "allowedCities")}
@@ -229,7 +237,18 @@ const AutosearchSettings = () => {
                                         text={"Allowed Cities names"}
                                         errorMessage={fieldValidation.allowedCities != null
                                             && !fieldValidation.allowedCities
-                                            && coordValidationMessages.ALLOWED_CITIES}
+                                            && coordValidationMessages.ALLOWED_NAMES}
+                                    />
+                                </div>
+                                <div className="row">
+                                    <InputNumberProperty
+                                        callback={(e) => setStringParameter(e, "allowedCountryCodes")}
+                                        value={settings.allowedCountryCodes}
+                                        id={"allowedCountryCodes"}
+                                        text={"Allowed country codes"}
+                                        errorMessage={fieldValidation.allowedCountryCodes != null
+                                            && !fieldValidation.allowedCountryCodes
+                                            && coordValidationMessages.ALLOWED_NAMES}
                                     />
                                 </div>
                             </div>

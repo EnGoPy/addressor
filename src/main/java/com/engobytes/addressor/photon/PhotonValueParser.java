@@ -55,7 +55,7 @@ public class PhotonValueParser {
                             String value = location.getProperties().getOsm_value();
 
                             boolean allowedCity =
-                                    properties.getIncludeCities().isEmpty() || properties.getIncludeCities().contains(location.getProperties().getCity());
+                                    properties.getAllowedCities().isEmpty() || properties.getAllowedCities().contains(location.getProperties().getCity());
                             boolean allowedTagPair = PhotonAutoSearchParserConstants.ALLOWED_TAG_PAIRS.contains(Pair.of(key, value));
 
                             return allowedCity && allowedTagPair;

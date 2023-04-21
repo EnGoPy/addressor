@@ -1,6 +1,7 @@
 class AutosearchSettingsModel{
     enableFiltering;
     allowedCities;
+    allowedCountryCodes;
     filteringLimit;
     photonApiLimit;
     useBoundary;
@@ -10,6 +11,7 @@ class AutosearchSettingsModel{
     southBoundary;
     constructor(enableFiltering,
                 allowedCities,
+                allowedCountryCodes,
                 filteringLimit,
                 photonApiLimit,
                 useBoundary,
@@ -19,6 +21,7 @@ class AutosearchSettingsModel{
                 southBoundary) {
         this.enableFiltering = enableFiltering;
         this.allowedCities = allowedCities;
+        this.allowedCountryCodes = allowedCountryCodes;
         this.filteringLimit = filteringLimit;
         this.photonApiLimit = photonApiLimit;
         this.useBoundary = useBoundary;

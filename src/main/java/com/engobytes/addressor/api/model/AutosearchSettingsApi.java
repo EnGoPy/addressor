@@ -15,6 +15,7 @@ public class AutosearchSettingsApi {
 
     private boolean enableFiltering;
     private String allowedCities;
+    private String allowedCountryCodes;
     private int filteringLimit;
     private int photonApiLimit;
     private boolean useBoundary;

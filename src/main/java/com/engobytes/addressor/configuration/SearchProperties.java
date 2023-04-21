@@ -1,6 +1,7 @@
 package com.engobytes.addressor.configuration;
 
 import com.engobytes.addressor.api.model.SearchPropertiesModel;
+import com.engobytes.addressor.utils.WordParser;
 import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.extern.slf4j.Slf4j;
@@ -16,6 +17,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.stream.Collectors;
 
 @Component
 @Slf4j
@@ -43,8 +45,8 @@ public class SearchProperties {
     @Value("#{'${map.location.autosearch.filtering.countries}'.empty?(new java.util.ArrayList()):'${map.location.autosearch.filtering.countries}'.split(',')}")
     private List<String> allowedCountryCodes;
 
-    @Value("#{'${map.location.autosearch.filtering.cities}'.empty?(new java.util.ArrayList()):'${map.location.autosearch.filtering.cities}'.split(',')}")
-    private List<String> includeCities = new ArrayList<>();
+    @Value("#{'${map.location.autosearch.filtering.cities}'.empty?(new java.util.ArrayList()): '${map.location.autosearch.filtering.cities}'.split(',')}")
+    private List<String> allowedCities = new ArrayList<>();
 
     @Value("#{new Boolean('${map.location.autosearch.search.useBoundary:false}')}")
     private Boolean useBoundaryBox;
@@ -66,10 +68,8 @@ public class SearchProperties {
 
     @PostConstruct
     private void setUp(){
-        log.info("S {}", southSearchBoundary);
-        log.info("N {}", northSearchBoundary);
-        log.info("E {}", easternSearchBoundary);
-        log.info("W {}", westernSearchBoundary);
+        log.info("countries : {}", getAllowedCountryCodes());
+        log.info("cities : {}", getAllowedCities());
         initializeBbox();
     }
 
@@ -99,13 +99,35 @@ public class SearchProperties {
                 .autoSearchPhotonRequestLimit(autoSearchPhotonRequestLimit)
                 .autoSearchResultLimit(autoSearchResultLimit)
                 .allowedCountryCodes(allowedCountryCodes)
-                .includeCities(includeCities)
+                .allowedCities(allowedCities)
                 .useBoundaryBox(useBoundaryBox)
                 .westernSearchBoundary(westernSearchBoundary)
                 .southSearchBoundary(southSearchBoundary)
                 .easternSearchBoundary(easternSearchBoundary)
                 .northSearchBoundary(northSearchBoundary)
                 .build();
+    }
+
+    public synchronized void setAutosearchSettings(SearchPropertiesModel newProps){
+        this.reverseGeocodingFiltering = newProps.isReverseGeocodingFiltering();
+        this.filterAutosearchWithAllowedTags = newProps.isFilterAutosearchWithAllowedTags();
+        this.autoSearchPhotonRequestLimit = newProps.getAutoSearchPhotonRequestLimit();
+        this.autoSearchResultLimit = newProps.getAutoSearchResultLimit();
+        this.allowedCountryCodes = newProps.getAllowedCountryCodes().stream()
+                .map(coutryCode -> WordParser.eraseFinishingStrings(coutryCode, " "))
+                .collect(Collectors.toList());
+        this.allowedCities = newProps.getAllowedCities().stream()
+                .map(cityName -> WordParser.eraseFinishingStrings(cityName, " "))
+                .collect(Collectors.toList());
+        this.useBoundaryBox = newProps.getUseBoundaryBox();
+        this.westernSearchBoundary = newProps.getWesternSearchBoundary();
+        this.southSearchBoundary = newProps.getSouthSearchBoundary();
+        this.easternSearchBoundary = newProps.getEasternSearchBoundary();
+        this.northSearchBoundary = newProps.getNorthSearchBoundary();
+    }
+
+    public synchronized void setReverseSettings(SearchPropertiesModel newProps){
+        this.reverseGeocodingFiltering = newProps.isReverseGeocodingFiltering();
     }
 
     @ReadOperation
@@ -117,7 +139,7 @@ public class SearchProperties {
         info.put("filterAutosearchWithAllowedTags", isFilterAutosearchWithAllowedTags());
         info.put("autoSearchResultLimit", getAutoSearchResultLimit());
         info.put("allowedCountryCodes", getAllowedCountryCodes());
-        info.put("includeCities", getIncludeCities());
+        info.put("includeCities", getAllowedCities());
         info.put("useBoundaryBox", getUseBoundaryBox());
         info.put("westernSearchBoundary", getWesternSearchBoundary());
         info.put("southSearchBoundary", getSouthSearchBoundary());

@@ -19,7 +19,7 @@ public class SearchPropertiesModel {
     private int autoSearchPhotonRequestLimit;
     private int autoSearchResultLimit;
     private List<String> allowedCountryCodes;
-    private List<String> includeCities;
+    private List<String> allowedCities;
     private Boolean useBoundaryBox;
     private Double westernSearchBoundary;
     private Double southSearchBoundary;
