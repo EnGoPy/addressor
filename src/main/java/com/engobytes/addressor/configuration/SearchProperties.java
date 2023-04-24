@@ -66,22 +66,14 @@ public class SearchProperties {
     @Getter(AccessLevel.NONE)
     private List<Double> boundaryBox = new ArrayList<>();
 
+    @Getter(AccessLevel.NONE)
+    private String boundaryBoxAsStringForPhotonUrl;
+
     @PostConstruct
-    private void setUp(){
+    private void setUp() {
         log.info("countries : {}", getAllowedCountryCodes());
         log.info("cities : {}", getAllowedCities());
-        initializeBbox();
-    }
-
-    public String getBoundaryForPhotonUrl(){
-        String bboxAsString = "";
-        for(int i=1; i <= boundaryBox.size(); i++){
-            bboxAsString = bboxAsString.concat(boundaryBox.get(i-1).toString());
-            if(i < getBoundaryBox().size()){
-                bboxAsString = bboxAsString.concat(",");
-            }
-        }
-        return bboxAsString;
+        refreshBBox();
     }
 
     public void setReverseGeocodingFiltering(boolean reverseGeocodingFiltering) {
@@ -92,7 +84,7 @@ public class SearchProperties {
         this.filterAutosearchWithAllowedTags = filterAutosearchWithAllowedTags;
     }
 
-    public SearchPropertiesModel getProperties(){
+    public SearchPropertiesModel getProperties() {
         return SearchPropertiesModel.builder()
                 .reverseGeocodingFiltering(reverseGeocodingFiltering)
                 .filterAutosearchWithAllowedTags(filterAutosearchWithAllowedTags)
@@ -108,26 +100,56 @@ public class SearchProperties {
                 .build();
     }
 
-    public synchronized void setAutosearchSettings(SearchPropertiesModel newProps){
-        this.reverseGeocodingFiltering = newProps.isReverseGeocodingFiltering();
-        this.filterAutosearchWithAllowedTags = newProps.isFilterAutosearchWithAllowedTags();
-        this.autoSearchPhotonRequestLimit = newProps.getAutoSearchPhotonRequestLimit();
-        this.autoSearchResultLimit = newProps.getAutoSearchResultLimit();
-        this.allowedCountryCodes = newProps.getAllowedCountryCodes().stream()
-                .map(coutryCode -> WordParser.eraseFinishingStrings(coutryCode, " "))
-                .collect(Collectors.toList());
-        this.allowedCities = newProps.getAllowedCities().stream()
-                .map(cityName -> WordParser.eraseFinishingStrings(cityName, " "))
-                .collect(Collectors.toList());
-        this.useBoundaryBox = newProps.getUseBoundaryBox();
-        this.westernSearchBoundary = newProps.getWesternSearchBoundary();
-        this.southSearchBoundary = newProps.getSouthSearchBoundary();
-        this.easternSearchBoundary = newProps.getEasternSearchBoundary();
-        this.northSearchBoundary = newProps.getNorthSearchBoundary();
+    public synchronized void setAutosearchSettings(SearchPropertiesModel newProps) {
+        boolean updateBBox = false;
+        if (newProps.getReverseGeocodingFiltering() != null) {
+            this.reverseGeocodingFiltering = newProps.getReverseGeocodingFiltering();
+        }
+        if (newProps.getFilterAutosearchWithAllowedTags() != null) {
+            this.filterAutosearchWithAllowedTags = newProps.getFilterAutosearchWithAllowedTags();
+        }
+        if (newProps.getAutoSearchPhotonRequestLimit() != null) {
+            this.autoSearchPhotonRequestLimit = newProps.getAutoSearchPhotonRequestLimit();
+        }
+        if (newProps.getAutoSearchResultLimit() != null) {
+            this.autoSearchResultLimit = newProps.getAutoSearchResultLimit();
+        }
+        if (newProps.getAllowedCountryCodes() != null) {
+            this.allowedCountryCodes = newProps.getAllowedCountryCodes().stream()
+                    .map(coutryCode -> WordParser.eraseFinishingStrings(coutryCode, " "))
+                    .collect(Collectors.toList());
+        }
+        if (newProps.getAllowedCities() != null) {
+            this.allowedCities = newProps.getAllowedCities().stream()
+                    .map(cityName -> WordParser.eraseFinishingStrings(cityName, " "))
+                    .collect(Collectors.toList());
+        }
+        if (newProps.getUseBoundaryBox() != null) {
+            this.useBoundaryBox = newProps.getUseBoundaryBox();
+        }
+        if (newProps.getWesternSearchBoundary() != null) {
+            this.westernSearchBoundary = newProps.getWesternSearchBoundary();
+            updateBBox = true;
+        }
+        if (newProps.getSouthSearchBoundary() != null) {
+            this.southSearchBoundary = newProps.getSouthSearchBoundary();
+            updateBBox = true;
+        }
+        if (newProps.getEasternSearchBoundary() != null) {
+            this.easternSearchBoundary = newProps.getEasternSearchBoundary();
+            updateBBox = true;
+        }
+        if (newProps.getNorthSearchBoundary() != null) {
+            this.northSearchBoundary = newProps.getNorthSearchBoundary();
+            updateBBox = true;
+        }
+        if(updateBBox){
+            refreshBBox();
+        }
     }
 
-    public synchronized void setReverseSettings(SearchPropertiesModel newProps){
-        this.reverseGeocodingFiltering = newProps.isReverseGeocodingFiltering();
+    public synchronized void setReverseSettings(boolean reverseGeocodingFiltering) {
+        this.reverseGeocodingFiltering = reverseGeocodingFiltering;
     }
 
     @ReadOperation
@@ -152,16 +174,35 @@ public class SearchProperties {
         return new WebEndpointResponse<>(wrapper);
     }
 
-    private List<Double> getBoundaryBox(){
+    public String getBoundaryBoxAsStringForPhotonUrl(){
+        return this.boundaryBoxAsStringForPhotonUrl;
+    }
+
+    private List<Double> getBoundaryBox() {
         return boundaryBox;
     }
 
-    private void initializeBbox(){
-        if(boundaryBox.isEmpty()){
+    private void refreshBBox(){
+        initializeBboxFromParams();
+        initializeBBoxVariableForPhoton();
+    }
+
+    private void initializeBboxFromParams() {
+        if (boundaryBox.isEmpty()) {
             boundaryBox.add(westernSearchBoundary);
             boundaryBox.add(northSearchBoundary);
             boundaryBox.add(easternSearchBoundary);
             boundaryBox.add(southSearchBoundary);
         }
+    }
+    private void initializeBBoxVariableForPhoton() {
+        String bboxAsString = "";
+        for (int i = 1; i <= boundaryBox.size(); i++) {
+            bboxAsString = bboxAsString.concat(boundaryBox.get(i - 1).toString());
+            if (i < getBoundaryBox().size()) {
+                bboxAsString = bboxAsString.concat(",");
+            }
+        }
+        this.boundaryBoxAsStringForPhotonUrl = bboxAsString;
     }
 }

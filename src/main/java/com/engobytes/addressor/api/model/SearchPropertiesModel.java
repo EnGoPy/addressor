@@ -14,10 +14,10 @@ import java.util.List;
 @Getter
 public class SearchPropertiesModel {
 
-    private boolean reverseGeocodingFiltering;
-    private boolean filterAutosearchWithAllowedTags;
-    private int autoSearchPhotonRequestLimit;
-    private int autoSearchResultLimit;
+    private Boolean reverseGeocodingFiltering;
+    private Boolean filterAutosearchWithAllowedTags;
+    private Integer autoSearchPhotonRequestLimit;
+    private Integer autoSearchResultLimit;
     private List<String> allowedCountryCodes;
     private List<String> allowedCities;
     private Boolean useBoundaryBox;

@@ -10,8 +10,8 @@ map:
     autosearch:
       filtering:
         enable: true
-        countries: PL,DE,FR
-        cities: Gliwice, Opole, Sucha Bezkidzka
+        countries: PL, DE, FR
+        cities: Gliwice, Opole
         photon:
           limit: 0
         api:

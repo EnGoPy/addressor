@@ -94,7 +94,7 @@ public class ConnectionPhotonAutoSearchGateway {
         if(propertySettings.getUseBoundaryBox()){
             url
                     .append("&bbox=")
-                    .append(propertySettings.getBoundaryForPhotonUrl());
+                    .append(propertySettings.getBoundaryBoxAsStringForPhotonUrl());
         }
         return getAutoSearchResponse(url.toString());
     }
